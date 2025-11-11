@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Club Logo */
+        #club-logo {
+            width: 130px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #222;
+        }
+
+        p {
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .choice {
+            width: 140px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .choice:hover {
+            transform: scale(1.18);
+        }
+
+        #result {
+            margin-top: 30px;
+            font-size: 24px;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Animations */
+        .win {
+            animation: glow-green 1s ease-in-out 0s 3;
+        }
+
+        .lose {
+            animation: glow-red 1s ease-in-out 0s 3;
+        }
+
+        .tie {
+            animation: glow-gray 1s ease-in-out 0s 3;
+        }
+
+        @keyframes glow-green {
+            0% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #d4edda; }
+            50% { box-shadow: 0 0 25px #28a745; transform: scale(1.1); background: #c3e6cb; }
+            100% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #d4edda; }
+        }
+
+        @keyframes glow-red {
+            0% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #f8d7da; }
+            50% { box-shadow: 0 0 25px #dc3545; transform: scale(1.1); background: #f5c6cb; }
+            100% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #f8d7da; }
+        }
+
+        @keyframes glow-gray {
+            0% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #e2e3e5; }
+            50% { box-shadow: 0 0 25px #6c757d; transform: scale(1.1); background: #d6d8db; }
+            100% { box-shadow: 0 0 12px rgba(0,0,0,0.3); transform: scale(1); background: #e2e3e5; }
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <!-- Club Logo -->
+    <img src="logo.jpg" id="club-logo">
+
+    <h1>Rock Paper Scissors</h1>
+    <p>Select your choice:</p>
+
+    <div class="choices">
+        <img src="rock.jpg" class="choice" onclick="playGame('Rock')">
+        <img src="paper.jpg" class="choice" onclick="playGame('Paper')">
+        <img src="scissors.jpg" class="choice" onclick="playGame('Scissors')">
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function playGame(playerChoice) {
+            const choices = ["Rock", "Paper", "Scissors"];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            const resultDiv = document.getElementById("result");
+
+            // Reset previous animations
+            resultDiv.classList.remove("win", "lose", "tie");
+
+            let result = "";
+
+            if (playerChoice === computerChoice) {
+                result = "🤝 It's a Tie! Both chose " + playerChoice;
+                resultDiv.classList.add("tie");
+            } 
+            else if (
+                (playerChoice === "Rock" && computerChoice === "Scissors") ||
+                (playerChoice === "Paper" && computerChoice === "Rock") ||
+                (playerChoice === "Scissors" && computerChoice === "Paper")
+            ) {
+                result = "🎉 You Win! " + playerChoice + " beats " + computerChoice;
+                resultDiv.classList.add("win");
+            } 
+            else {
+                result = "😞 You Lose! " + computerChoice + " beats " + playerChoice;
+                resultDiv.classList.add("lose");
+            }
+
+            resultDiv.innerHTML = result;
+        }
+    </script>
+
+</body>
+</html>
